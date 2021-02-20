@@ -55,8 +55,9 @@
               'Authorization': `Bearer ${res.data.token}`
             }
           })
-          .then((data) => {
-            this.user = data.body;
+          .then((res) => {
+            console.log(res.data);
+            this.user = res.data;
             this.$router.push('/home');
           }, (err) => {
             console.log(err);
