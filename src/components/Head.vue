@@ -21,13 +21,13 @@
 </template>
 
 <script>
-    export default {
-        methods: {
-            showInfo(){
-                this.$router.push('/info');
-            }
-        }
+  export default {
+    methods: {
+      showInfo(){
+      this.$router.push('/info');
+      }
     }
+  }
 </script>
 
 <style scoped>
