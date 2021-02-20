@@ -49,40 +49,23 @@
       methods: {
         login(){
           axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
-          .then((response) => {
-   //       this.token = data.token;
-   //       this.userId = data.id;
-   //      console.log(data);
-
-      //    const url = `http://localhost:4000/data/user/${response.data.id}`;
-          console.log(response);
-          console.log(response.data.token);
-
-axios.get(`http://localhost:4000/data/user/${response.data.id}`, {
-  headers: {
-    'Authorization': `Bearer ${response.data.token}`
-  }
-})
-
-
-
-
-                
-//          axios.get(`http://localhost:4000/data/user/${response.data.id} , {headers: 'Authorization': Bearer ${response.data.token}}`)
-
-                          .then((data) => {
-                            console.log(data);
-                                this.user = data.body;
-                                this.$router.push('/home/');
-                            }, (err) => {
-                                console.log(err);
-                            });
-                    }).catch(() => {
-                        this.error = true;
-                    })
-                    
+          .then((res) => {
+          axios.get(`http://localhost:4000/data/user/${res.data.id}`, {
+            headers: {
+              'Authorization': `Bearer ${res.data.token}`
             }
+          })
+          .then((data) => {
+            this.user = data.body;
+            this.$router.push('/home');
+          }, (err) => {
+            console.log(err);
+          });
+          }).catch(() => {
+            this.error = true;
+          })
         }
+      }
     }
 </script>
 
