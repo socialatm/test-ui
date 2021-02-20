@@ -61,6 +61,7 @@
           Close
         </button>
       </div>
+      <userDetails :user="this.user" />
       <searchResultList :results="results" />
     </div>
     <router-view :user="user" />
@@ -68,84 +69,82 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
-    import User from './User.vue';
-    import SearchResultList from './SearchResultList.vue';
-    import {eventBus} from "../main";
+  import {Global} from '../global.js';
+  import userDetails from './UserDetails.vue';
+  import SearchResultList from './SearchResultList.vue';
+  import {eventBus} from "../main";
 
-    export default{
-        data: function () {
-            return {
-                user: {},
-                searchText: '',
-                results: [],
-                searched: false,
-                friendInterval: 0,
-                loading: false
-            }
-        },
-        components: {
-            userView: User,
-            searchResultList: SearchResultList
-        },
-        methods: {
-            fetchUser(userid){
-                Global.getUser(userid)
-                    .then((user) => {
-                        this.user = user;
-
-                    }, (err) => {
-                        console.log(err);
-                    });
-            },
-            performSearch(){
-                Global.performSearch(this.searchText)
-                    .then((data) => {
-                        this.results = data.body;
-                        this.searched = true;
-                        console.log(data.body);
-                    }, (err) => {
-                        console.log(err);
-                    })
-            },
-            instantSearch(){
-                if (this.searchText.length > 3) {
-                    this.performSearch();
-                }
-                if (this.searchText === '') {
-                    this.searched  =false;
-                }
-
-            },
-            fetchFriends(userId){
-                if(userId) Global.user.friends.push(userId);
-                Global.getFriends()
-                    .then((data) => {
-                        Global.friendships = data.body;
-                        eventBus.$emit('friendshipActionDone');
-                    }, (err) => {
-                        console.log(err)
-                    });
-            },
-            logout(){
-                Global.logout();
-                this.$router.push({name: 'login'});
-            }
-        },
-        computed: {
-            showResults(){
-                if (this.searched && this.results.length !== 0) return true;
-                return false;
-            }
-        },
-        created(){
+  export default{
+    data: function () {
+      return {
+        user: {},
+        searchText: '',
+        results: [],
+        searched: false,
+        friendInterval: 0,
+        loading: false
+      }
+    },
+    components: {
+      searchResultList: SearchResultList,
+      userDetails: userDetails
+    },
+    methods: {
+      fetchUser(userid){
+        Global.getUser(userid)
+        .then((user) => {
+        this.user = user;
+        }, (err) => {
+        console.log(err);
+        });
+      },
+      performSearch(){
+        Global.performSearch(this.searchText)
+        .then((data) => {
+          this.results = data.body;
+          this.searched = true;
+          console.log(data.body);
+        }, (err) => {
+          console.log(err);
+        })
+      },
+      instantSearch(){
+        if (this.searchText.length > 3) {
+          this.performSearch();
+        }
+        if (this.searchText === '') {
+          this.searched  =false;
+        }
+      },
+      fetchFriends(userId){
+        if(userId) Global.user.friends.push(userId);
+          Global.getFriends()
+          .then((data) => {
+            Global.friendships = data.body;
+            eventBus.$emit('friendshipActionDone');
+          }, (err) => {
+            console.log(err)
+          });
+      },
+      logout(){
+        Global.logout();
+        this.$router.push({name: 'login'});
+      }
+    },
+    computed: {
+      showResults(){
+        if (this.searched && this.results.length !== 0) return true;
+        return false;
+      }
+    },
+      created(){
             this.user = Global.user;
             this.fetchFriends();
             eventBus.$on('friendshipAction', (userId) => {
                 console.log('event load friends');
                 this.fetchFriends(userId);
             });
-            eventBus.$on('posted', (post) => {
+            eventBus.$on('posted', () => {
                 this.loading = false;
             });
 
@@ -153,77 +152,64 @@
                 this.loading = true;
             });
 
-            const self = this;
-           this.friendInterval =  setInterval(() => {
+            this.friendInterval =  setInterval(() => {
                if(!this.loading){
                     this.fetchFriends();
                 }
             },5000)
-        },
-        beforeDestroy(){
-            clearInterval(this.friendInterval);
-        }
-    }
+      },
+      beforeDestroy(){
+        clearInterval(this.friendInterval);
+      }
+  }
 </script>
 
 <style scoped>
-    .main {
-        margin-top: -65px;
-        max-width: 1000px;
-    }
-
-    .nav {
-        margin-right: auto;
-
-    }
-
-    .search {
-        width: 30vw;
-        margin-right: 4%;
-    }
-
-    .control {
-        display: inline-flex;
-        flex-direction: row;
-        width: 100%;
-
-    }
-
-    .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
-        color: #fff;
-        background-color: #333333;
-        border: 0;
-    }
-
-    .nav-pills > li > a:hover {
-        background-color: rgba(219, 215, 19, 0);;
-        transform: scale(1.1);
-    }
-
-    .nav-pills > li > a {
-        color: #333333;
-    }
-
-    .btn-secondary {
-        background-color: #333;
-        color: white;
-    }
-
-    .btn {
-        max-width: 80px;
-        max-height: 35px;
-        color: white;
-        background-color: #333;
-        outline: none;
-    }
-
-    .closeSearch {
-        margin-top: 30px;
-        max-width: 100px;
-        max-height: 55px;
-    }
-
-    .btn:active {
-        outline: none;
-    }
+  .main {
+    margin-top: -65px;
+    max-width: 1000px;
+  }
+  .nav {
+    margin-right: auto;
+  }
+  .search {
+    width: 30vw;
+    margin-right: 4%;
+  }
+  .control {
+    display: inline-flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: #fff;
+    background-color: #333333;
+    border: 0;
+  }
+  .nav-pills > li > a:hover {
+    background-color: rgba(219, 215, 19, 0);;
+    transform: scale(1.1);
+  }
+  .nav-pills > li > a {
+    color: #333333;
+  }
+  .btn-secondary {
+    background-color: #333;
+    color: white;
+  }
+  .btn {
+    max-width: 80px;
+    max-height: 35px;
+    color: white;
+    background-color: #333;
+    outline: none;
+  }
+  .closeSearch {
+    margin-top: 30px;
+    max-width: 100px;
+    max-height: 55px;
+  }
+  .btn:active {
+    outline: none;
+  }
 </style>

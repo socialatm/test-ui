@@ -23,17 +23,20 @@
 </template>
 
 <script>
-    import SingleUser from './SingleUser.vue';
-    import SinglePost from './SinglePost.vue';
-    export default{
-        components: {
-            singleUser: SingleUser,
-            singlePost: SinglePost
-        },
-        props: {
-            results: Array
+  import SingleUser from './SingleUser.vue';
+  import SinglePost from './SinglePost.vue';
+  export default{
+    components: {
+      singleUser: SingleUser,
+      singlePost: SinglePost
+      },
+      props: {
+        results: {
+          type: Array,
+          default: () => []
         }
-    }
+      }
+  }
 </script>
 
 <style scoped>
