@@ -58,7 +58,7 @@
           .then((res) => {
             console.log(res.data);
             this.user = res.data;
-            this.$router.push('/home');
+            this.$router.push('/newsfeed');
           }, (err) => {
             console.log(err);
           });
