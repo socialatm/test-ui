@@ -2,12 +2,18 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
+import NewsfeedComp from '@/components/NewsfeedComp'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/newsfeed',
+    name: 'Newsfeed',
+    component: NewsfeedComp
   },
   {
     path: '/register',

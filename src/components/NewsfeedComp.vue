@@ -70,8 +70,8 @@
 
 <script>
   import {Global} from '../global.js';
-  import userDetails from './UserDetails.vue';
-  import SearchResultList from './SearchResultList.vue';
+  import userDetails from '@/components/UserDetails.vue';
+  import SearchResultList from '@/components/SearchResultList.vue';
   import {eventBus} from "../main";
 
   export default{
