@@ -39,10 +39,12 @@
     import {Global} from '../global.js';
     export default{
         props: {
-            comment: Object
+            comment: {
+              type: Object,
+              default: 'add a comment' 
+            }
         },
         computed: {
-
             likesCount(){
                 let count = this.comment.likes.length;
                 if (count === 0) {
@@ -81,73 +83,58 @@
         margin-bottom: 1em;
         padding: 1em;
     }
-
     .avatar {
        max-width: 6vh;
         max-height: 6vh;
         margin-top: 5px;
         margin-right: 10px;
     }
-
     .flex {
         display: flex;
         flex-direction: row;
     }
-
     .user {
         margin-right: auto;
         font-size: 2.5vh;
         font-weight: bold;
     }
-
     .btn:focus {
         outline: none;
     }
-
     .text-content {
         margin-left: 10%;
         margin-right: auto;
         max-width: 100%;
     }
-
     p{
         font-size: 2vh;
     }
-
     .likesNumber {
         margin-left: 10px;
         font-size: 2.5vh;
         margin-top: auto;
         margin-bottom: auto;
     }
-
     .likes {
         margin-left: 10%;
     }
-
     a {
         color: #333333;
     }
-
     a:focus {
         text-decoration: none;
         color: #23527c;
     }
-
     a:hover {
         text-decoration: none;
         color: #23527c;
     }
-
     .likedIcon {
         font-size: 4vh;
         color: rgba(219, 215, 19, 0.82);
     }
-
     .btn-icon {
         font-size: 4vh;
         color: #333333;
     }
-
-
 </style>

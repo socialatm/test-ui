@@ -83,7 +83,6 @@
 </template>
 
 <script>
-//    import {register} from '../global-2.js';
 import axios from 'axios';
     export default{
         data: function () {

@@ -37,42 +37,50 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
-
+  import axios from 'axios';
     export default {
+      data: function () {
+        return {
+          username: "",
+          password: "",
+          error: false
+        }
+      },
+      methods: {
+        login(){
+          axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
+          .then((response) => {
+   //       this.token = data.token;
+   //       this.userId = data.id;
+   //      console.log(data);
 
-        data: function () {
-            return {
-                username: "",
-                passwod: "",
-                error: false
-            }
-        },
-        methods: {
-            login(){
-                console.log(Global.logedIn);
-                let toSend = {
-                    username: this.username,
-                    password: this.password
-                };
-                Global.login(toSend)
-                    .then((data) => {
-                        Global.token = data.token;
+      //    const url = `http://localhost:4000/data/user/${response.data.id}`;
+          console.log(response);
+          console.log(response.data.token);
 
-                        Global.userId = data.id;
+axios.get(`http://localhost:4000/data/user/${response.data.id}`, {
+  headers: {
+    'Authorization': `Bearer ${response.data.token}`
+  }
+})
 
-                        Global.getUser(Global.userId)
-                            .then((data) => {
-                                Global.user = data.body;
+
+
+
+                
+//          axios.get(`http://localhost:4000/data/user/${response.data.id} , {headers: 'Authorization': Bearer ${response.data.token}}`)
+
+                          .then((data) => {
+                            console.log(data);
+                                this.user = data.body;
                                 this.$router.push('/home/');
                             }, (err) => {
                                 console.log(err);
                             });
-
-
-                    },(err) => {
+                    }).catch(() => {
                         this.error = true;
                     })
+                    
             }
         }
     }
