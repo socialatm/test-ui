@@ -56,7 +56,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import userDetails from '@/components/UserDetails.vue';
   import SearchResultList from '@/components/SearchResultList.vue';
   import {eventBus} from "../main";
@@ -89,12 +88,12 @@
       },
       
       performSearch(){
-        axios.get(`http://localhost:4000/data/search`, {
+        this.axios.get(`http://localhost:4000/data/search`, {
           params: {
             string: this.searchText
           },  
           headers: {
-            'Authorization': `Bearer ` // ${res.data.token}
+            'Authorization': `Bearer ${this.token}`
           }
           })
         .then((data) => {
@@ -114,16 +113,19 @@
         }
       },
       fetchFriends(userId){
+
+        
+
         if(userId) this.user.friends.push(userId);
         
-        axios.get(`http://localhost:4000/data/user/${this.user._id}/friends`, {
+        this.axios.get(`http://localhost:4000/data/user/${this.user._id}/friends`, {
    
-   /*
+   
             headers: {
-              'Authorization': `Bearer ${res.data.token}`
+              'Authorization': `Bearer ${this.token}`
             }
 
-*/
+
 
           })
           .then((data) => {
@@ -146,6 +148,8 @@
       }
     },
       created(){
+
+             console.log(this.user);
       //     this.user = Global.user;
             this.fetchFriends();
       /*
@@ -162,8 +166,8 @@
             });
 */
             this.friendInterval =  setInterval(() => {
-               if(!this.loading){
-                    this.fetchFriends();
+                if(!this.loading){
+                    this.fetchFriends(this.user._id);
                 }
             },300000)
       },
