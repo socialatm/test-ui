@@ -37,7 +37,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
     export default {
       data: function () {
         return {
@@ -48,9 +47,9 @@
       },
       methods: {
         login(){
-          axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
+          this.axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
           .then((res) => {
-          axios.get(`http://localhost:4000/data/user/${res.data.id}`, {
+          this.axios.get(`http://localhost:4000/data/user/${res.data.id}`, {
             headers: {
               'Authorization': `Bearer ${res.data.token}`
             }
