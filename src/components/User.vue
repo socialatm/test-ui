@@ -163,7 +163,7 @@
                     this.fetchUserPost();
                 }
                 },
-                5000);
+                300000);
         },
         mounted(){
             if (!Global.userId) return;

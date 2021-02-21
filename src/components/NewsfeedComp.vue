@@ -178,7 +178,7 @@
                if(!this.loading){
                     this.fetchFriends();
                 }
-            },5000)
+            },300000)
       },
       beforeUnmount(){
         clearInterval(this.friendInterval);
