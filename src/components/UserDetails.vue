@@ -156,8 +156,7 @@
                 console.log("cloooose")
                 this.newpost = false;
             });
-      //      const self = this;
-
+            
             this.userInterval = setInterval(() => {
                 if(!this.loading){
                     this.fetchUserPost();
