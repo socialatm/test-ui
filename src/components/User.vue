@@ -102,7 +102,6 @@
             newPost: Newpost,
             singlePost: Singlepost,
             userEditComp: UserEdit,
-            userInterval: 0
         },
         data: function () {
             return {
@@ -156,8 +155,7 @@
                 console.log("cloooose")
                 this.newpost = false;
             });
-            const self = this;
-
+            
             this.userInterval = setInterval(() => {
                 if(!this.loading){
                     this.fetchUserPost();
