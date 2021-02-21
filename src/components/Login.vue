@@ -48,10 +48,11 @@
       methods: {
         login(){
           this.axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
-          .then((res) => {
+          .then((res) => { 
+          this.token = res.data.token;   
           this.axios.get(`http://localhost:4000/data/user/${res.data.id}`, {
             headers: {
-              'Authorization': `Bearer ${res.data.token}`
+              'Authorization': `Bearer ${this.token}`
             }
           })
           .then((res) => {
