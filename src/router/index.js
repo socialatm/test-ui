@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
 import NewsfeedComp from '@/components/NewsfeedComp'
+import UserView from '@/components/UserView.vue';
+import Friends from '@/components/Friends.vue';
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/friends',
+    name: 'Friends',
+    component: Friends
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: UserView
   },
   {
     path: '/about',
