@@ -3,28 +3,15 @@
     <div class=" control">
       <div class=" nav">
         <ul class=" nav nav-pills">
-          <router-link
-            :to="{name: 'home'}"
-            exact
-            tag="li"
-            active-class="active"
-          >
-            <a>Home</a>
-          </router-link>
-          <router-link
-            :to="{name: 'history'}"
-            tag="li"
-            active-class="active"
-          >
-            <a id="historyRoute">History</a>
-          </router-link>
-          <router-link
-            :to="{name:'friends'}"
-            tag="li"
-            active-class="active"
-          >
+          <router-link to="/">
+            Home
+          </router-link> |
+          <router-link to="/history">
+            History
+          </router-link> |
+          <router-link to="/friends">
             <a>Friends</a>
-          </router-link>
+          </router-link> |
         </ul>
       </div>
       <div class=" search">
