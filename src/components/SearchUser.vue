@@ -93,8 +93,7 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
-    import {eventBus} from "../main";
+  import {eventBus} from "../main";
     export default{
         data: function () {
             return {
@@ -111,7 +110,7 @@
         },
         methods: {
             findUser(){
-                Global.findUsers(this.generateQuery())
+                this.findUsers(this.generateQuery())  //  Global
                     .then((data) => {
                         eventBus.$emit('searchPerformed', data.body);
                     }, (err) => {
