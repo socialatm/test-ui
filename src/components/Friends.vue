@@ -68,13 +68,13 @@
     import SearchResultList from './SearchResultList.vue';
     import SingleUser from './SingleUser.vue';
     import {eventBus} from "../main";
-    import {Global} from '../global.js';
+    
     export default{
-        components: {
-            singleUser: SingleUser,
-            searchUser: SearchUser,
-            searchResultList: SearchResultList
-        },
+      components: {
+        singleUser: SingleUser,
+        searchUser: SearchUser,
+        searchResultList: SearchResultList
+      },
         data: function () {
             return {
                 friends: [],
@@ -87,7 +87,7 @@
         },
         methods: {
             getOtherUser(friendship){
-                if (friendship.userOne === Global.userId) return friendship.userTwo;
+                if (friendship.userOne === this.userId) return friendship.userTwo;  //  Global
                 return friendship.userOne;
             },
             updateSearchStatus(){
@@ -114,7 +114,7 @@
 //                    .then((data) => {
 //                        console.log(data);
 //                        Global.friendships = data.body;
-                        Global.friendships.forEach((friendship) => {
+                        this.friendships.forEach((friendship) => {  //  Global
                             if (friendship.status === 'PENDING') {
                                 this.pendingFriends.push(friendship);
                             } else {
