@@ -45,11 +45,14 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
+//   import {Global} from '../global.js';
     import {eventBus} from "../main";
     export default{
         props: {
-            userId: String,
+            userId: {
+                type: String,
+                default: () => {}
+            },
             nostatus: Boolean
         },
         data: function () {
@@ -61,29 +64,29 @@
         methods: {
             requestStatus(){
                 let status = 'send';
-                Global.friendships.forEach((friendship) => {
+                this.friendships.forEach((friendship) => {    // Global
                     if (friendship.status === 'PENDING') {
-                        if (friendship.userOne === this.user._id && friendship.userTwo === Global.userId) {
+                        if (friendship.userOne === this.user._id && friendship.userTwo === this.userId) {    // Global
                             console.log('accept req')
                             status = 'accept';
                         }
-                        if (friendship.userOne === Global.userId && friendship.userTwo === this.user._id) {
+                        if (friendship.userOne === this.userId && friendship.userTwo === this.user._id) {    // Global
                             console.log('pending');
                             status = 'pending'
                         }
                     }
                 })
-                if (this.userId === Global.userId) {
+                if (this.userId === this.userId) {    // Global
                     status = 'null';
                 }
-                if (Global.user.friends.includes(this.user._id)) {
+                if (this.user.friends.includes(this.user._id)) {    // Global
                     status = 'friend';
                 }
                 this.status = status;
             },
             acceptFriendRequest(){
-                Global.updateFriendship(this.userId, true)
-                    .then((data) => {
+                this.updateFriendship(this.userId, true)    // Global
+                    .then(() => {    //  .then((data) => {
                         this.status = 'friend';
                         eventBus.$emit('friendshipAction', this.userId);
                     }, (err) => {
@@ -91,8 +94,8 @@
                     })
             },
             declineFriendRequest(){
-                Global.updateFriendship(this.userId, false)
-                    .then((data) => {
+                this.updateFriendship(this.userId, false)    // Global
+                    .then(() => {    //  .then((data) => {
                         this.status = 'send';
                         eventBus.$emit('friendshipAction');
                     }, (err) => {
@@ -100,8 +103,8 @@
                     })
             },
             sendFriendRequest(){
-                Global.sendFriendrequest(this.userId)
-                    .then((data) => {
+                this.sendFriendrequest(this.userId)    // Global
+                    .then(() => {    //  .then((data) => {
                         eventBus.$emit('friendshipAction');
                         this.status = 'pending';
                     }, (err) => {
@@ -109,7 +112,7 @@
                     })
             },
             fetchUser(){
-                Global.getUser(this.userId)
+                this.getUser(this.userId)    // Global
                     .then((data) => {
                         this.user = data.body;
                         this.requestStatus();

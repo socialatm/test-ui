@@ -69,7 +69,7 @@
 </template>
 
 <script>
-  import {Global} from '../global.js';
+  import axios from 'axios';
   import userDetails from '@/components/UserDetails.vue';
   import SearchResultList from '@/components/SearchResultList.vue';
   import {eventBus} from "../main";
@@ -90,16 +90,26 @@
       userDetails: userDetails
     },
     methods: {
+
+    
       fetchUser(userid){
-        Global.getUser(userid)
+        this.getUser(userid) // Global
         .then((user) => {
         this.user = user;
         }, (err) => {
         console.log(err);
         });
       },
+      
       performSearch(){
-        Global.performSearch(this.searchText)
+        axios.get(`http://localhost:4000/data/search`, {
+          params: {
+            string: this.searchText
+          },  
+          headers: {
+            'Authorization': `Bearer ` // ${res.data.token}
+          }
+          })
         .then((data) => {
           this.results = data.body;
           this.searched = true;
@@ -117,17 +127,28 @@
         }
       },
       fetchFriends(userId){
-        if(userId) Global.user.friends.push(userId);
-          Global.getFriends()
+        if(userId) this.user.friends.push(userId);
+        
+        axios.get(`http://localhost:4000/data/user/${this.user._id}/friends`, {
+   
+   /*
+            headers: {
+              'Authorization': `Bearer ${res.data.token}`
+            }
+
+*/
+
+          })
           .then((data) => {
-            Global.friendships = data.body;
+            console.log(`newsfeedComp line 143: \n ${data}`);
+            this.friendships = data.body; //Global
             eventBus.$emit('friendshipActionDone');
           }, (err) => {
             console.log(err)
           });
       },
       logout(){
-        Global.logout();
+        this.logout(); // Global
         this.$router.push({name: 'login'});
       }
     },
@@ -138,8 +159,9 @@
       }
     },
       created(){
-            this.user = Global.user;
+      //     this.user = Global.user;
             this.fetchFriends();
+      /*
             eventBus.$on('friendshipAction', (userId) => {
                 console.log('event load friends');
                 this.fetchFriends(userId);
@@ -151,14 +173,14 @@
             eventBus.$on('posting', () => {
                 this.loading = true;
             });
-
+*/
             this.friendInterval =  setInterval(() => {
                if(!this.loading){
                     this.fetchFriends();
                 }
             },5000)
       },
-      beforeDestroy(){
+      beforeUnmount(){
         clearInterval(this.friendInterval);
       }
   }

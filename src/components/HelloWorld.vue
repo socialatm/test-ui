@@ -112,7 +112,7 @@ export default {
   props: {
     msg: 
       {type: String,
-        default: 'Ray was here' 
+        default: () => {} 
       }
   }
 }

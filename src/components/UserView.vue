@@ -117,7 +117,7 @@
 
 <script>
     import Singlepost from './SinglePost.vue';
-    import {Global} from '../global.js';
+//   import {Global} from '../global.js';
     export default{
         components: {
             singlePost: Singlepost
@@ -132,7 +132,7 @@
         },
         methods: {
             getUser(){
-                Global.getUser(this.userId, true)
+                this.getUser(this.userId, true)  // Global
                     .then((data) => {
                         this.user = data.body;
                         this.requestStatus = this.getRequestStatus();
@@ -148,33 +148,36 @@
                     });
             },
             acceptFriendRequest(){
-                Global.updateFriendship(this.userId, true)
-                    .then((data) => {
+                this.updateFriendship(this.userId, true)  // Global
+                    .then(() => {   //  .then((data) => {
                         this.requestStatus = 'friend';
-                        eventBus.$emit('friendshipAction', this.userId);
+                    //    eventBus.$emit('friendshipAction', this.userId);
                     }, (err) => {
                         console.log(err);
                     })
             },
             declineFriendRequest(){
-                Global.updateFriendship(this.userId, false)
-                    .then((data) => {
+                this.updateFriendship(this.userId, false)  // Global
+                    .then(() => {    // .then((data) => {
                         this.requestStatus = 'send';
-                        eventBus.$emit('friendshipAction');
+                  //      eventBus.$emit('friendshipAction');
 
                     }, (err) => {
                         console.log(err);
                     })
             },
             sendFriendRequest(){
-                Global.sendFriendrequest(this.userId)
-                    .then((data) => {
+                this.sendFriendrequest(this.userId)  // Global
+                    .then(() => {    // .then((data) => {
                         this.requestStatus = 'pending';
-                        eventBus.$emit('friendshipAction');
+                    //    eventBus.$emit('friendshipAction');
                     }, (err) => {
                         console.log(err);
                     })
             },
+
+
+/* @todo
             load(){
                 this.userId = this.$route.params.id;
                 if (!this.userId) {
@@ -185,6 +188,10 @@
                 }
                 this.getUser();
             },
+*/
+
+/* @todo
+
             getRequestStatus(){
                 let status = 'send';
                 Global.friendships.forEach((friendship) => {
@@ -205,7 +212,14 @@
                 }
                 return status;
             }
+
+*/
+
+
         },
+
+/*    @todo
+
         computed: {
             isUser(){
                 return this.userId === Global.userId;
@@ -225,6 +239,10 @@
                this.load();
             }
         },
+
+
+*/
+
         beforeMount(){
             this.load();
             this.$forceUpdate();

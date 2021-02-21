@@ -96,13 +96,13 @@
     import Singlepost from './SinglePost.vue';
     import UserEdit from './UserEdit.vue';
     import {eventBus} from "../main";
-    import {Global} from '../global.js';
+//    import {Global} from '../global.js';
     export default {
         components: {
             newPost: Newpost,
             singlePost: Singlepost,
             userEditComp: UserEdit,
-            userInterval: 0
+  //          userInterval: 0
         },
         data: function () {
             return {
@@ -115,7 +115,7 @@
         props: {
             user: {
               type:Object,
-              default: this.user
+              default: () => {}
             }
         },
         methods: {
@@ -124,8 +124,8 @@
             },
             fetchUserPost(){
                 console.log('fetch');
-                if (!Global.userId) return;
-                Global.getPosts(Global.userId)
+                if (!this.userId) return;    // Global
+                this.getPosts(this.userId)  // Global
                     .then((data) => {
                         this.posts = data.body;
                         this.loading = false;
@@ -156,7 +156,7 @@
                 console.log("cloooose")
                 this.newpost = false;
             });
-            const self = this;
+      //      const self = this;
 
             this.userInterval = setInterval(() => {
                 if(!this.loading){
@@ -166,7 +166,7 @@
                 5000);
         },
         mounted(){
-            if (!Global.userId) return;
+            if (!this.userId) return;  // Global
             this.fetchUserPost();
         },
         beforeDestroy(){

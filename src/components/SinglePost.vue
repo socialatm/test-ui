@@ -110,7 +110,7 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
+//    import {Global} from '../global.js';
     import Comment from './CommentComp.vue';
     export default{
         data: function () {
@@ -123,19 +123,26 @@
           commentComp: Comment
         },
         props: {
-            post: Object
+            post: {
+              type: Object,
+              default: () => {}
+            }
         },
         methods: {
+            
+           /* @todo
             addLike(){
-                Global.postLike(this.post._id)
-                    .then((data) => {
-                        this.post.likes.push(Global.userId);
+                this.postLike(this.post._id)  // Global
+                    .then(() => {  //  .then((data) => {
+                        this.post.likes.push(this.userId);  // push(Global.userId)Global
                     }, (err) => {
                         console.log(err);
                     })
             },
+*/
+/*    @todo
             postComment(){
-                Global.sendComment(this.post._id, this.commentText)
+                this.sendComment(this.post._id, this.commentText)  // Global
                     .then((data) => {
                         this.post.comments = data.body;
                         this.showComm = true;
@@ -144,6 +151,8 @@
                         console.log(err);
                     })
             }
+*/
+
         },
         computed: {
             isMedia(){
@@ -163,22 +172,29 @@
                 }
                 return count;
             },
+
+
+/* @todo
             mediaType(){
                 if (!this.post.mediaType) return '';
                 if (this.post.mediaType.includes('image')) return 'image';
                 if (this.post.mediaType.includes('video')) return 'video';
                 if (this.post.mediaType.includes('youtube')) return 'youtube';
             },
+
+*/
+
+
             avatar(){
                 if (!this.post.author.avatar) return "http://placehold.it/60x60";
                 return this.post.author.avatar;
             },
             liked(){
-                return this.post.likes.includes(Global.userId);
+                return this.post.likes.includes(this.userId);  //  Global
             },
             getUserId(){
                 if (this.post.author._id) return this.post.author._id;
-                return Global.userId;
+                return this.userId;  //  Global
             },
             showHide(){
                 if(this.showComm) return 'Hide';

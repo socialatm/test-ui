@@ -23,7 +23,7 @@
       <div class="form-group">
         <label>First name</label>
         <input
-          v-model="user.name.firstName"
+          v-model="username.firstName"
           type="text"
           class="form-control"
         >
@@ -31,7 +31,7 @@
       <div class="form-group">
         <label>Last name</label>
         <input
-          v-model="user.name.lastName"
+          v-model="username.lastName"
           type="text"
           class="form-control"
         >
@@ -39,7 +39,7 @@
       <div class="form-group">
         <label>Username</label>
         <input
-          v-model="user.username"
+          v-model="userusername"
           type="text"
           class="form-control"
         >
@@ -47,7 +47,7 @@
       <div class="form-group">
         <label>Email</label>
         <input
-          v-model="user.contact.email"
+          v-model="usercontact.email"
           type="email"
           class="form-control"
         >
@@ -55,7 +55,7 @@
       <div class="form-group">
         <label>Phone</label>
         <input
-          v-model="user.contact.phone"
+          v-model="usercontact.phone"
           type="text"
           class="form-control"
         >
@@ -63,7 +63,7 @@
       <div class="form-group">
         <label>Age</label>
         <input
-          v-model="user.age"
+          v-model="userage"
           type="number"
           class="form-control"
         >
@@ -71,7 +71,7 @@
       <div class="form-group">
         <label>Street</label>
         <input
-          v-model="user.address.street"
+          v-model="useraddress.street"
           type="text"
           class="form-control"
         >
@@ -79,7 +79,7 @@
       <div class="form-group">
         <label>Zip</label>
         <input
-          v-model="user.address.zip"
+          v-model="useraddress.zip"
           type="text"
           class="form-control"
         >
@@ -90,7 +90,7 @@
       >
         <label>City</label>
         <input
-          v-model="user.address.city"
+          v-model="useraddress.city"
           type="text"
           class="form-control"
         >
@@ -98,7 +98,7 @@
       <div class="form-group">
         <label>Country</label>
         <input
-          v-model="user.address.country"
+          v-model="useraddress.country"
           type="text"
           class="form-control"
         >
@@ -129,11 +129,14 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
+//    import {Global} from '../global.js';
     import {eventBus} from "../main";
     export default{
         props: {
-            user: Object
+            user: {
+              type: Object,
+              default: () => {}
+            }
         },
         data: function () {
             return {
@@ -153,8 +156,8 @@
         methods: {
             postUser(){
                 console.log(this.user);
-                Global.updateUser(this.user)
-                    .then((data) => {
+                this.updateUser(this.user)  // Global
+                    .then(() => {    //  .then((data) => {
                         eventBus.$emit('userSaved');
                     }, (err) => {
                         console.log(err);
@@ -173,7 +176,7 @@
             generateImg(file){
 
                 let reader = new FileReader();
-                let self = this;
+                // let self = this;
                 reader.onloadend = function () {
                     document.getElementById('userAvatarEdit').src = reader.result;
                 }
@@ -187,9 +190,9 @@
             sendAvatar(){
                 const formData = new FormData();
                 formData.append("image", this.image);
-                Global.sendUserAvatar(formData)
+                this.sendUserAvatar(formData)    // Global
                     .then((data) => {
-                        Global.user.avatar = data.body;
+                        this.useravatar = data.body;    //  Global
                     }, (err) => {
                         console.log(err);
                     })
@@ -197,7 +200,7 @@
         },
         created() {
             if (this.user.address) return;
-            this.user.address = {};
+            this.useraddress = {};
         }
     }
 </script>

@@ -36,12 +36,12 @@
 </template>
 
 <script>
-    import {Global} from '../global.js';
+//    import {Global} from '../global.js';
     export default{
         props: {
             comment: {
               type: Object,
-              default: 'add a comment' 
+              default: () => {} 
             }
         },
         computed: {
@@ -57,22 +57,27 @@
                 return this.comment.author.avatar;
             },
             liked(){
-                return this.comment.likes.includes(Global.userId);
+                return this.comment.likes.includes(this.userId);  // Global
             },
             getUserId(){
                 if (this.comment.author._id) return this.comment.author._id;
-                return Global.userId;
+                return this.userId;  // Global
             }
         },
         methods: {
+
+/* @todo    
             addLike(){
                 Global.postCommentLike(this.comment._id)
-                    .then((data) => {
+                    .then(() => {    // .then((data) => {
                         this.comment.likes.push(Global.userId);
                     }, (err) => {
                         console.log(err);
                     })
             }
+*/
+
+
         }
     }
 </script>

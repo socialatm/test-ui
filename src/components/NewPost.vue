@@ -86,7 +86,7 @@
 
 <script>
     import {eventBus} from "../main";
-    import {Global} from '../global.js';
+//    import {Global} from '../global.js';
     export default {
         data: function () {
             return {
@@ -117,6 +117,8 @@
                 console.log(this.video);
                 document.getElementById('media').appendChild(this.generateVideo(this.video));
             },
+
+/* @todo
             generateVideo(file){
 //                let vid = document.createElement("video");
 //                vid.setAttribute('controls', '');
@@ -128,6 +130,7 @@
 
                 return h2;
             },
+*/
             generateImg(file){
                 let img = document.createElement("img");
                 img.setAttribute("style", "max-width: 80%;");
@@ -160,12 +163,12 @@
                     formData.append("media", this.youtube);
                 }
                 eventBus.$emit('posting');
-                Global.sendPost(formData)
+                this.sendPost(formData)   // Global
                     .then((data) => {
                         delete data.body.author;
                         data.body.author = {};
-                        data.body.author.username = Global.user.username;
-                        data.body.author.avatar = Global.user.avatar;
+                        data.body.author.username = this.user.username; // Global
+                        data.body.author.avatar = this.user.avatar;   // Global
                         eventBus.$emit('posted',(data.body));
                     }, (err) => {
                         console.log(err);
