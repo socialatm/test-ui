@@ -87,7 +87,7 @@
       },
       
       performSearch(){
-        this.axios.get(`http://localhost:4000/data/search`, {
+        this.axios.get(`data/search`, {
           params: {
             string: this.searchText
           },  
@@ -114,7 +114,7 @@
       fetchFriends(userId){
         if(userId) this.user.friends.push(userId);
         
-        this.axios.get(`http://localhost:4000/data/user/${this.axios.defaults.user._id}`) // , {
+        this.axios.get(`data/user/${this.axios.defaults.user._id}`) // , {
         .then((data) => {
             console.log(`newsfeedComp line 120: \n JSON.stringify(${data})`);
             this.friendships = data.body; //Global

@@ -112,7 +112,7 @@ import axios from 'axios';
 
                 } else {
                     console.log(this.user);
-                    axios.post('http://localhost:4000/data/register', this.user)
+                    axios.post('data/register', this.user)
                         .then(() => {
                             this.$router.push('/');
                         }, (err) => {
