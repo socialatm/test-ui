@@ -8,10 +8,6 @@ export const Global = new Vue({
         friendships: []
     },
     methods: {
-        login(user){
-        //    return this.$http.post('login', user);
-            return Global.axios.post('http://localhost:4000/data/login', user);
-        },
         postUser(user){
             // return this.$http.post('user', user);
             return Global.axios.post('http://localhost:4000/data/register', user);
