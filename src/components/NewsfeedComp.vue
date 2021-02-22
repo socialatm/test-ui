@@ -113,22 +113,10 @@
         }
       },
       fetchFriends(userId){
-
-        
-
         if(userId) this.user.friends.push(userId);
         
-        this.axios.get(`http://localhost:4000/data/user/${this.user._id}/friends`, {
-   
-   
-            headers: {
-              'Authorization': `Bearer ${this.token}`
-            }
-
-
-
-          })
-          .then((data) => {
+        this.axios.get(`http://localhost:4000/data/user/${this.axios.defaults.user._id}`) // , {
+        .then((data) => {
             console.log(`newsfeedComp line 143: \n ${data}`);
             this.friendships = data.body; //Global
             eventBus.$emit('friendshipActionDone');
@@ -138,7 +126,7 @@
       },
       logout(){
         this.logout(); // Global
-        this.$router.push({name: 'login'});
+        this.$router.push('/login');
       }
     },
     computed: {
@@ -147,11 +135,11 @@
         return false;
       }
     },
-      created(){
-
-             console.log(this.user);
-      //     this.user = Global.user;
-            this.fetchFriends();
+    created(){
+      this.user = this.axios.defaults.user;
+      console.log(this.user);
+        
+       //     this.fetchFriends();
       /*
             eventBus.$on('friendshipAction', (userId) => {
                 console.log('event load friends');
@@ -170,10 +158,10 @@
                     this.fetchFriends(this.user._id);
                 }
             },300000)
-      },
-      beforeUnmount(){
-        clearInterval(this.friendInterval);
-      }
+    },
+    beforeUnmount(){
+      clearInterval(this.friendInterval);
+    }
   }
 </script>
 
