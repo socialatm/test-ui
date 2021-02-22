@@ -69,11 +69,7 @@ export const Global = new Vue({
         performSearch(string){
             return this.$http.get(`search/?string=${string}`, {headers: {'Authorization': `Bearer ${this.token}`}});
         },
-        logout(){
-            this.token = "";
-            this.userId = "";
-            this.user = {};
-        }
+        
     },
     computed: {
         logedIn: function () {

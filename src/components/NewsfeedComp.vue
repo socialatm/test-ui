@@ -58,8 +58,7 @@
 <script>
   import userDetails from '@/components/UserDetails.vue';
   import SearchResultList from '@/components/SearchResultList.vue';
-  import {eventBus} from "../main";
-
+  
   export default{
     data: function () {
       return {
@@ -117,15 +116,17 @@
         
         this.axios.get(`http://localhost:4000/data/user/${this.axios.defaults.user._id}`) // , {
         .then((data) => {
-            console.log(`newsfeedComp line 143: \n ${data}`);
+            console.log(`newsfeedComp line 120: \n JSON.stringify(${data})`);
             this.friendships = data.body; //Global
-            eventBus.$emit('friendshipActionDone');
+ //           eventBus.$emit('friendshipActionDone');
           }, (err) => {
             console.log(err)
           });
       },
       logout(){
-        this.logout(); // Global
+        this.axios.defaults.headers.common['Authorization'] = "";
+        this.userId = "";
+        this.user = {};
         this.$router.push('/login');
       }
     },
@@ -137,7 +138,7 @@
     },
     created(){
       this.user = this.axios.defaults.user;
-      console.log(this.user);
+      console.log(this.axios.defaults.user);
         
        //     this.fetchFriends();
       /*
