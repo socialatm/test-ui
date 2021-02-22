@@ -129,30 +129,28 @@
 </template>
 
 <script>
-//    import {Global} from '../global.js';
-    import {eventBus} from "../main";
-    export default{
-        props: {
-            user: {
-              type: Object,
-              default: () => {}
-            }
-        },
-        data: function () {
-            return {
-                testPassword: "",
-                error: false,
-                errorMsg: {},
-                image: {},
-            };
-        },
-        computed: {
-            avatar(){
-                if (!this.user.avatar) return "http://placehold.it/160x220";
-                return this.user.avatar;
-
-            },
-        },
+  import {eventBus} from "../main";
+  export default{
+    props: {
+      user: {
+        type: Object,
+        default: () => {}
+      }
+    },
+    data: function () {
+      return {
+        testPassword: "",
+        error: false,
+        errorMsg: {},
+        image: {},
+      };
+    },
+    computed: {
+      avatar(){
+        if (!this.user.avatar) return "http://placehold.it/160x220";
+        return this.user.avatar;
+      },
+    },
         methods: {
             postUser(){
                 console.log(this.user);
@@ -202,7 +200,7 @@
             if (this.user.address) return;
             this.useraddress = {};
         }
-    }
+  }
 </script>
 
 <style scoped>
