@@ -49,15 +49,14 @@
         login(){
           this.axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
           .then((res) => { 
-          this.token = res.data.token;   
-          this.axios.get(`http://localhost:4000/data/user/${res.data.id}`, {
-            headers: {
-              'Authorization': `Bearer ${this.token}`
-            }
-          })
-          .then((res) => {
-            console.log(res.data);
+          //  make the token global here
+          this.axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;   
+          this.axios.get(`http://localhost:4000/data/user/${res.data.id}`)
+            .then((res) => {
+            console.log(res);
             this.user = res.data;
+            // assign the user to an axios default & we can pass it from component to component
+            this.axios.defaults.user = res.data;
             this.$router.push('/newsfeed').catch(() => {});
           }, (err) => {
             console.log(err);
