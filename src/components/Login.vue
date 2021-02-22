@@ -37,21 +37,25 @@
 </template>
 
 <script>
-    export default {
-      data: function () {
-        return {
-          username: "",
-          password: "",
-          error: false
-        }
-      },
+  export default {
+    data: function () {
+      return {
+        username: "",
+        password: "",
+        error: false
+      }
+    },
+    created(){
+      // set the base url early
+      this.axios.defaults.baseURL = 'http://localhost:4000/';
+    },
       methods: {
         login(){
-          this.axios.post('http://localhost:4000/data/login', {username: this.username, password: this.password })
+          this.axios.post('data/login', {username: this.username, password: this.password })
           .then((res) => { 
           //  make the token global here
           this.axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;   
-          this.axios.get(`http://localhost:4000/data/user/${res.data.id}`)
+          this.axios.get(`data/user/${res.data.id}`)
             .then((res) => {
             console.log(res);
             this.user = res.data;
@@ -66,7 +70,7 @@
           })
         }
       }
-    }
+  }
 </script>
 
 <style scoped>
