@@ -83,8 +83,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-    export default{
+  export default{
         data: function () {
             return {
                 user: {
@@ -111,8 +110,11 @@ import axios from 'axios';
                     alert('Password is not identical')
 
                 } else {
+                  this.user.username = this.user.contact.email? this.user.contact.email : this.user.contact.phone;
+
                     console.log(this.user);
-                    axios.post('data/register', this.user)
+                    this.axios.defaults.baseURL = 'http://localhost:4000/';
+                    this.axios.post('data/register', this.user)
                         .then(() => {
                             this.$router.push('/');
                         }, (err) => {
