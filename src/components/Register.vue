@@ -102,27 +102,25 @@
       error: false,
       errorMsg: {}
     }),
-        methods: {
-            registertUser(){
-                if (this.user.password !== this.testPassword) {
-                    alert('Password is not identical')
-
-                } else {
-                  this.user.username = this.user.contact.email? this.user.contact.email : this.user.contact.phone;
-
-                    console.log(this.user);
-                    this.axios.defaults.baseURL = 'http://localhost:4000/';
-                    this.axios.post('data/register', this.user)
-                        .then(() => {
-                            this.$router.push('/');
-                        }, (err) => {
-                            console.log(err);
-                            this.error= true;
-                            this.errorMsg = err.body;
-                        });
-                }
-            }
+    methods: {
+      registertUser(){
+        if (this.user.password !== this.testPassword) {
+          alert('Password is not identical')
+        } else {
+          this.user.username = this.user.contact.email? this.user.contact.email : this.user.contact.phone;
+          console.log(this.user);
+          this.axios.defaults.baseURL = 'http://localhost:4000/';
+          this.axios.post('data/register', this.user)
+          .then(() => {
+            this.$router.push('/');
+          }, (err) => {
+            console.log(err);
+            this.error= true;
+            this.errorMsg = err.body;
+          });
         }
+      }
+    }
   }
 </script>
 
