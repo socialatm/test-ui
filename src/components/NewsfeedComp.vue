@@ -115,12 +115,11 @@
         
         this.axios.get(`data/user/${this.axios.defaults.user._id}`) // , {
         .then((data) => {
-            console.log(`newsfeedComp line 120: \n JSON.stringify(${data})`);
-            this.friendships = data.body; //Global
- //           eventBus.$emit('friendshipActionDone');
-          }, (err) => {
-            console.log(err)
-          });
+          console.log(`newsfeedComp line 120: \n JSON.stringify(${data})`);
+          this.friendships = data.body; //Global
+        }, (err) => {
+          console.log(err)
+        });
       },
       logout(){
         this.axios.defaults.headers.common['Authorization'] = "";
@@ -138,26 +137,12 @@
     created(){
       this.user = this.axios.defaults.user;
       console.log(this.axios.defaults.user);
-        
-       //     this.fetchFriends();
-      /*
-            eventBus.$on('friendshipAction', (userId) => {
-                console.log('event load friends');
-                this.fetchFriends(userId);
-            });
-            eventBus.$on('posted', () => {
-                this.loading = false;
-            });
-
-            eventBus.$on('posting', () => {
-                this.loading = true;
-            });
-*/
-            this.friendInterval =  setInterval(() => {
-                if(!this.loading){
-                    this.fetchFriends(this.user._id);
-                }
-            },300000)
+      this.fetchFriends();
+      this.friendInterval =  setInterval(() => {
+        if(!this.loading){
+          this.fetchFriends(this.user._id);
+        }
+      },300000)
     },
     beforeUnmount(){
       clearInterval(this.friendInterval);
