@@ -75,7 +75,6 @@
       userDetails: userDetails
     },
     methods: {
-
     
       fetchUser(userid){
         this.getUser(userid) // Global
