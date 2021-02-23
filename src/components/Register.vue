@@ -84,26 +84,24 @@
 
 <script>
   export default{
-        data: function () {
-            return {
-                user: {
-                    username: "",
-                    password: "",
-                    name: {
-                        firstName: "",
-                        lastName: ""
-                    },
-                    age: 0,
-                    contact: {
-                        email: "",
-                        phone: ""
-                    }
-                },
-                testPassword: "",
-                error: false,
-                errorMsg: {}
-            };
+    data: () => ({
+      user: {
+        username: "",
+        password: "",
+        name: {
+          firstName: "",
+          lastName: ""
         },
+        age: 0,
+        contact: {
+          email: "",
+          phone: ""
+        }
+      },
+      testPassword: "",
+      error: false,
+      errorMsg: {}
+    }),
         methods: {
             registertUser(){
                 if (this.user.password !== this.testPassword) {
@@ -125,7 +123,7 @@
                 }
             }
         }
-    }
+  }
 </script>
 
 <style scoped>
