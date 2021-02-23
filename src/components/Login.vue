@@ -1,12 +1,12 @@
 <template>
   <div class="form">
     <div class="form-group">
-      <label>Username</label>
+      <label>Email</label>
       <input
         v-model="username"
         type="text"
         class="form-control"
-        placeholder="Username"
+        placeholder="Email"
       >
     </div>
     <div class="form-group">

@@ -17,14 +17,6 @@
       >
     </div>
     <div class="form-group">
-      <label>Username</label>
-      <input
-        v-model="user.username"
-        type="text"
-        class="form-control"
-      >
-    </div>
-    <div class="form-group">
       <label>Password</label>
       <input
         v-model="user.password"
