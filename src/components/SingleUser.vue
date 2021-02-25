@@ -45,22 +45,21 @@
 </template>
 
 <script>
-//   import {Global} from '../global.js';
-    import {eventBus} from "../main";
-    export default{
-        props: {
-            userId: {
-                type: String,
-                default: () => {}
-            },
-            nostatus: Boolean
-        },
-        data: function () {
-            return {
-                user: {},
-                status: ''
-            }
-        },
+  
+  export default{
+    props: {
+      userId: {
+        type: String,
+        default: () => {}
+      },
+      nostatus: Boolean
+    },
+    data: function () {
+      return {
+        user: {},
+        status: ''
+      }
+    },
         methods: {
             requestStatus(){
                 let status = 'send';
@@ -88,7 +87,7 @@
                 this.updateFriendship(this.userId, true)    // Global
                     .then(() => {    //  .then((data) => {
                         this.status = 'friend';
-                        eventBus.$emit('friendshipAction', this.userId);
+                        
                     }, (err) => {
                         console.log(err);
                     })
@@ -97,7 +96,6 @@
                 this.updateFriendship(this.userId, false)    // Global
                     .then(() => {    //  .then((data) => {
                         this.status = 'send';
-                        eventBus.$emit('friendshipAction');
                     }, (err) => {
                         console.log(err);
                     })
@@ -105,7 +103,6 @@
             sendFriendRequest(){
                 this.sendFriendrequest(this.userId)    // Global
                     .then(() => {    //  .then((data) => {
-                        eventBus.$emit('friendshipAction');
                         this.status = 'pending';
                     }, (err) => {
                         console.log(err);
