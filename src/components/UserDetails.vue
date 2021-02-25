@@ -122,8 +122,8 @@
       },
       fetchUserPost(){
         console.log('fetch');
-        if (!this.userId) return;    // Global
-        this.getPosts(this.userId)  // Global
+        if (!this.userId) return;
+        this.getPosts(this.userId)
         .then((data) => {
           this.posts = data.body;
           this.loading = false;
@@ -144,7 +144,7 @@
       300000);
     },
     mounted(){
-      if (!this.userId) return;  // Global
+      if (!this.userId) return;
       this.fetchUserPost();
     },
     beforeDestroy(){

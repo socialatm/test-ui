@@ -110,8 +110,8 @@
 </template>
 
 <script>
-//    import {Global} from '../global.js';
-    import Comment from './CommentComp.vue';
+  import Comment from './CommentComp.vue';
+
     export default{
         data: function () {
             return {
@@ -132,9 +132,9 @@
             
            /* @todo
             addLike(){
-                this.postLike(this.post._id)  // Global
+                this.postLike(this.post._id)
                     .then(() => {  //  .then((data) => {
-                        this.post.likes.push(this.userId);  // push(Global.userId)Global
+                        this.post.likes.push(this.userId);
                     }, (err) => {
                         console.log(err);
                     })
@@ -142,7 +142,7 @@
 */
 /*    @todo
             postComment(){
-                this.sendComment(this.post._id, this.commentText)  // Global
+                this.sendComment(this.post._id, this.commentText)
                     .then((data) => {
                         this.post.comments = data.body;
                         this.showComm = true;

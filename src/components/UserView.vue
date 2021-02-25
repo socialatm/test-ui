@@ -132,7 +132,7 @@
     },
     methods: {
       getUser(){
-        this.getUser(this.userId, true)  // Global
+        this.getUser(this.userId, true)
         .then((data) => {
           this.user = data.body;
           this.requestStatus = this.getRequestStatus();

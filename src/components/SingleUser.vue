@@ -63,7 +63,7 @@
         methods: {
             requestStatus(){
                 let status = 'send';
-                this.friendships.forEach((friendship) => {    // Global
+                this.friendships.forEach((friendship) => {
                     if (friendship.status === 'PENDING') {
                         if (friendship.userOne === this.user._id && friendship.userTwo === this.userId) {    // Global
                             console.log('accept req')
@@ -75,16 +75,16 @@
                         }
                     }
                 })
-                if (this.userId === this.userId) {    // Global
+                if (this.userId === this.userId) {
                     status = 'null';
                 }
-                if (this.user.friends.includes(this.user._id)) {    // Global
+                if (this.user.friends.includes(this.user._id)) {
                     status = 'friend';
                 }
                 this.status = status;
             },
             acceptFriendRequest(){
-                this.updateFriendship(this.userId, true)    // Global
+                this.updateFriendship(this.userId, true)
                     .then(() => {    //  .then((data) => {
                         this.status = 'friend';
                         
@@ -93,7 +93,7 @@
                     })
             },
             declineFriendRequest(){
-                this.updateFriendship(this.userId, false)    // Global
+                this.updateFriendship(this.userId, false)
                     .then(() => {    //  .then((data) => {
                         this.status = 'send';
                     }, (err) => {
@@ -101,7 +101,7 @@
                     })
             },
             sendFriendRequest(){
-                this.sendFriendrequest(this.userId)    // Global
+                this.sendFriendrequest(this.userId)
                     .then(() => {    //  .then((data) => {
                         this.status = 'pending';
                     }, (err) => {
@@ -109,7 +109,7 @@
                     })
             },
             fetchUser(){
-                this.getUser(this.userId)    // Global
+                this.getUser(this.userId)
                     .then((data) => {
                         this.user = data.body;
                         this.requestStatus();

@@ -116,7 +116,7 @@
         this.axios.get(`data/user/${this.axios.defaults.user._id}`) // , {
         .then((data) => {
           console.log(`newsfeedComp line 120: \n JSON.stringify(${data})`);
-          this.friendships = data.body; //Global
+          this.friendships = data.body;
         }, (err) => {
           console.log(err)
         });

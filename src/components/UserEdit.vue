@@ -182,7 +182,7 @@
         formData.append("image", this.image);
         this.sendUserAvatar(formData)
         .then((data) => {
-          this.useravatar = data.body;    //  Global
+          this.useravatar = data.body;
         }, (err) => {
           console.log(err);
         })

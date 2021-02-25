@@ -161,12 +161,12 @@
           formData.append("mediaType", "youtube");
           formData.append("media", this.youtube);
         }
-        this.sendPost(formData)   // Global
+        this.sendPost(formData)
         .then((data) => {
           delete data.body.author;
           data.body.author = {};
-          data.body.author.username = this.user.username; // Global
-          data.body.author.avatar = this.user.avatar;   // Global
+          data.body.author.username = this.user.username;
+          data.body.author.avatar = this.user.avatar;
         }, (err) => {
           console.log(err);
         })

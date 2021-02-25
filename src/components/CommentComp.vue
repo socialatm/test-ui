@@ -36,7 +36,7 @@
 </template>
 
 <script>
-//    import {Global} from '../global.js';
+  
     export default{
         props: {
             comment: {
@@ -57,11 +57,11 @@
                 return this.comment.author.avatar;
             },
             liked(){
-                return this.comment.likes.includes(this.userId);  // Global
+                return this.comment.likes.includes(this.userId);
             },
             getUserId(){
                 if (this.comment.author._id) return this.comment.author._id;
-                return this.userId;  // Global
+                return this.userId;
             }
         },
         methods: {

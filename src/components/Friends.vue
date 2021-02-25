@@ -86,7 +86,7 @@
     },
     methods: {
       getOtherUser(friendship){
-        if (friendship.userOne === this.userId) return friendship.userTwo;  //  Global
+        if (friendship.userOne === this.userId) return friendship.userTwo;
         return friendship.userOne;
       },
       updateSearchStatus(){
