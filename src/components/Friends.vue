@@ -64,48 +64,47 @@
 </template>
 
 <script>
-    import SearchUser from './SearchUser.vue';
-    import SearchResultList from './SearchResultList.vue';
-    import SingleUser from './SingleUser.vue';
-    import {eventBus} from "../main";
+  import SearchUser from './SearchUser.vue';
+  import SearchResultList from './SearchResultList.vue';
+  import SingleUser from './SingleUser.vue';
+  import {eventBus} from "../main";
     
-    export default{
-      components: {
-        singleUser: SingleUser,
-        searchUser: SearchUser,
-        searchResultList: SearchResultList
+  export default{
+    components: {
+      singleUser: SingleUser,
+      searchUser: SearchUser,
+      searchResultList: SearchResultList
+    },
+    data: function () {
+      return {
+        friends: [],
+        pendingFriends: [],
+        searchOpen: 'closed',
+        showResultList: false,
+        searchResults: [],
+        loading: true
+      }
+    },
+    methods: {
+      getOtherUser(friendship){
+        if (friendship.userOne === this.userId) return friendship.userTwo;  //  Global
+        return friendship.userOne;
       },
-        data: function () {
-            return {
-                friends: [],
-                pendingFriends: [],
-                searchOpen: 'closed',
-                showResultList: false,
-                searchResults: [],
-                loading: true
-            }
-        },
-        methods: {
-            getOtherUser(friendship){
-                if (friendship.userOne === this.userId) return friendship.userTwo;  //  Global
-                return friendship.userOne;
-            },
-            updateSearchStatus(){
-                if(this.searchOpen === 'closed') {
-                    this.searchOpen = 'open';
-                    return;
-                }
-                if(this.searchOpen === 'open'){
-                    this.searchOpen = 'closed';
-                    return;
-                }
-                if(this.searchOpen === 'performed') {
-                    this.searchOpen = 'closed';
-                    this.showResultList = false;
-                    return;
-                }
-
-            },
+      updateSearchStatus(){
+        if(this.searchOpen === 'closed') {
+          this.searchOpen = 'open';
+          return;
+        }
+        if(this.searchOpen === 'open'){
+          this.searchOpen = 'closed';
+          return;
+        }
+        if(this.searchOpen === 'performed') {
+          this.searchOpen = 'closed';
+          this.showResultList = false;
+          return;
+        }
+      },
             fetchFriends(){
                 this.pendingFriends = [];
                 this.friends = [];
@@ -128,54 +127,51 @@
                     });
                 this.loading = false;
             }
-        },
-        computed: {
-            friendsSize(){
-                return this.friends.length;
-            },
-            friendOrFriends(){
-                if (this.friends.length === 1) return 'Friend';
-                return 'Friends'
-            },
-            searchButtonText(){
-                if (this.searchOpen === 'closed') return 'Search for friends';
-                return 'Close'
-            }
-        },
-        created(){
+    },
+    computed: {
+      friendsSize(){
+        return this.friends.length;
+      },
+      friendOrFriends(){
+        if (this.friends.length === 1) return 'Friend';
+        return 'Friends'
+      },
+      searchButtonText(){
+        if (this.searchOpen === 'closed') return 'Search for friends';
+        return 'Close'
+      }
+    },
+      created(){
+        this.fetchFriends();
+          eventBus.$on('searchPerformed', (result) => {
+            this.loading = false;
+            this.searchResults = result;
+            this.searchOpen = 'performed';
+            this.showResultList =true;
+          });
+          eventBus.$on('friendshipActionDone', () => {
             this.fetchFriends();
-            eventBus.$on('searchPerformed', (result) => {
-                this.loading = false;
-                this.searchResults = result;
-                this.searchOpen = 'performed';
-                this.showResultList =true;
-            });
-            eventBus.$on('friendshipActionDone', () => {
-                this.fetchFriends();
-            });
-
-        }
+          });
+      }
     }
 </script>
 
 <style scoped>
-    .main-friends {
-        margin-top: 2em;
-    }
-
-    .search-button {
-        width: 50%;
-        margin-bottom: 1em;
-        background-color: #333333;
-        height: 2.5em;
-        color: white;
-        font-size: 1.5em
-    }
-
-    .friends-list{
-        margin-top: 1em;
-    }
-    span {
-        font-size: 4em;
-    }
+  .main-friends {
+    margin-top: 2em;
+  }
+  .search-button {
+    width: 50%;
+    margin-bottom: 1em;
+    background-color: #333333;
+    height: 2.5em;
+    color: white;
+    font-size: 1.5em
+  }
+  .friends-list{
+    margin-top: 1em;
+  }
+  span {
+    font-size: 4em;
+  }
 </style>

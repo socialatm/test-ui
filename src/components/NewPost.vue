@@ -85,38 +85,37 @@
 </template>
 
 <script>
-    import {eventBus} from "../main";
-//    import {Global} from '../global.js';
-    export default {
-        data: function () {
-            return {
-                post: {},
-                showYoutube: false,
-                image: {},
-                video: {},
-                youtube: "",
-                fotoAdded: false,
-                videoAdded: false,
-                ytAdded: false,
-                loading: false
-            }
-        },
-        computed: {},
-        methods: {
-            isMedia(){
-                return this.fotoAdded || this.videoAdded || this.ytAdded;
-            },
-            getImageInput(event){
-                this.fotoAdded = true;
-                this.image = event.target.files[0];
-                document.getElementById('media').appendChild(this.generateImg(this.image));
-            },
-            getVideoInput(event){
-                this.videoAdded = true;
-                this.video = event.target.files[0];
-                console.log(this.video);
-                document.getElementById('media').appendChild(this.generateVideo(this.video));
-            },
+    
+  export default {
+    data: function () {
+      return {
+        post: {},
+        showYoutube: false,
+        image: {},
+        video: {},
+        youtube: "",
+        fotoAdded: false,
+        videoAdded: false,
+        ytAdded: false,
+        loading: false
+      }
+    },
+    computed: {},
+    methods: {
+      isMedia(){
+        return this.fotoAdded || this.videoAdded || this.ytAdded;
+      },
+      getImageInput(event){
+        this.fotoAdded = true;
+        this.image = event.target.files[0];
+        document.getElementById('media').appendChild(this.generateImg(this.image));
+      },
+      getVideoInput(event){
+        this.videoAdded = true;
+        this.video = event.target.files[0];
+        console.log(this.video);
+        document.getElementById('media').appendChild(this.generateVideo(this.video));
+      },
 
 /* @todo
             generateVideo(file){
@@ -131,64 +130,59 @@
                 return h2;
             },
 */
-            generateImg(file){
-                let img = document.createElement("img");
-                img.setAttribute("style", "max-width: 80%;");
-                let reader = new FileReader();
-                reader.onloadend = function () {
-                    img.src = reader.result;
-                }
-                reader.readAsDataURL(file);
-                return img;
-            },
-            sendPost(){
-                if (!this.post.title && !this.post.content) {
-                    alert('Pls give your post a title or add some content at least');
-                    return;
-                }
-                this.loading = true;
-                const formData = new FormData();
-                formData.append("title", this.post.title);
-                formData.append('content', this.post.content);
-                if (this.fotoAdded) {
-                    formData.append("mediaType", "image");
-                    formData.append("media", this.image);
-                    console.log("image appended")
-                }
-                else if (this.videoAdded) {
-                    formData.append("mediaType", "video");
-                    formData.append("media", this.video);
-                } else if (this.youtube !== "") {
-                    formData.append("mediaType", "youtube");
-                    formData.append("media", this.youtube);
-                }
-                eventBus.$emit('posting');
-                this.sendPost(formData)   // Global
-                    .then((data) => {
-                        delete data.body.author;
-                        data.body.author = {};
-                        data.body.author.username = this.user.username; // Global
-                        data.body.author.avatar = this.user.avatar;   // Global
-                        eventBus.$emit('posted',(data.body));
-                    }, (err) => {
-                        console.log(err);
-                    })
-            },
-            addFoto(){
-                this.$refs.fileImg.click();
-            },
-            addVideo(){
-                this.$refs.fileVideo.click();
-            },
-            addYt(){
-                console.log('youtube');
-            },
-            closePost(){
-                eventBus.$emit('closePost');
-            }
+      generateImg(file){
+        let img = document.createElement("img");
+        img.setAttribute("style", "max-width: 80%;");
+        let reader = new FileReader();
+        reader.onloadend = function () {
+          img.src = reader.result;
         }
-
+        reader.readAsDataURL(file);
+          return img;
+      },
+      sendPost(){
+        if (!this.post.title && !this.post.content) {
+          alert('Pls give your post a title or add some content at least');
+          return;
+        }
+        this.loading = true;
+        const formData = new FormData();
+        formData.append("title", this.post.title);
+        formData.append('content', this.post.content);
+        if (this.fotoAdded) {
+          formData.append("mediaType", "image");
+          formData.append("media", this.image);
+          console.log("image appended")
+        }
+        else if (this.videoAdded) {
+          formData.append("mediaType", "video");
+          formData.append("media", this.video);
+        } else if (this.youtube !== "") {
+          formData.append("mediaType", "youtube");
+          formData.append("media", this.youtube);
+        }
+        this.sendPost(formData)   // Global
+        .then((data) => {
+          delete data.body.author;
+          data.body.author = {};
+          data.body.author.username = this.user.username; // Global
+          data.body.author.avatar = this.user.avatar;   // Global
+        }, (err) => {
+          console.log(err);
+        })
+      },
+      addFoto(){
+        this.$refs.fileImg.click();
+      },
+      addVideo(){
+        this.$refs.fileVideo.click();
+      },
+      addYt(){
+        console.log('youtube');
+      },
+      closePost() {}
     }
+  }
 </script>
 
 <style scoped>
