@@ -116,66 +116,61 @@
 </template>
 
 <script>
-    import Singlepost from './SinglePost.vue';
-//   import {Global} from '../global.js';
-    export default{
-        components: {
-            singlePost: Singlepost
-        },
-        data: function () {
-            return {
-                loading: true,
-                user: {},
-                userId: "",
-                requestStatus: ''
-            }
-        },
-        methods: {
-            getUser(){
-                this.getUser(this.userId, true)  // Global
-                    .then((data) => {
-                        this.user = data.body;
-                        this.requestStatus = this.getRequestStatus();
-                        this.loading = false;
-                    }, (err) => {
-                        if (err.status === 401) {
-                            console.log(err);
-                            this.$router.replace({name: 'login'});
-                        }
-                        if (err.status === 404) {
-                            this.$router.push({name: '404'});
-                        }
-                    });
-            },
-            acceptFriendRequest(){
-                this.updateFriendship(this.userId, true)  // Global
-                    .then(() => {   //  .then((data) => {
-                        this.requestStatus = 'friend';
-                    //    eventBus.$emit('friendshipAction', this.userId);
-                    }, (err) => {
-                        console.log(err);
-                    })
-            },
-            declineFriendRequest(){
-                this.updateFriendship(this.userId, false)  // Global
-                    .then(() => {    // .then((data) => {
-                        this.requestStatus = 'send';
-                  //      eventBus.$emit('friendshipAction');
-
-                    }, (err) => {
-                        console.log(err);
-                    })
-            },
-            sendFriendRequest(){
-                this.sendFriendrequest(this.userId)  // Global
-                    .then(() => {    // .then((data) => {
-                        this.requestStatus = 'pending';
-                    //    eventBus.$emit('friendshipAction');
-                    }, (err) => {
-                        console.log(err);
-                    })
-            },
-
+  import Singlepost from './SinglePost.vue';
+  
+  export default{
+    components: {
+      singlePost: Singlepost
+    },
+    data: function () {
+      return {
+        loading: true,
+        user: {},
+        userId: "",
+        requestStatus: ''
+      }
+    },
+    methods: {
+      getUser(){
+        this.getUser(this.userId, true)  // Global
+        .then((data) => {
+          this.user = data.body;
+          this.requestStatus = this.getRequestStatus();
+          this.loading = false;
+        }, (err) => {
+          if (err.status === 401) {
+            console.log(err);
+            this.$router.replace({name: 'login'});
+          }
+          if (err.status === 404) {
+            this.$router.push({name: '404'});
+          }
+        });
+      },
+      acceptFriendRequest(){
+        this.updateFriendship(this.userId, true)
+        .then(() => {
+          this.requestStatus = 'friend';
+        }, (err) => {
+          console.log(err);
+        })
+      },
+      declineFriendRequest(){
+        this.updateFriendship(this.userId, false)
+        .then(() => {
+          this.requestStatus = 'send';
+        }, (err) => {
+          console.log(err);
+        })
+      },
+      sendFriendRequest(){
+        this.sendFriendrequest(this.userId)
+        .then(() => {
+          this.requestStatus = 'pending';
+        }, (err) => {
+          console.log(err);
+        })
+      },
 
 /* @todo
             load(){
@@ -191,7 +186,6 @@
 */
 
 /* @todo
-
             getRequestStatus(){
                 let status = 'send';
                 Global.friendships.forEach((friendship) => {
@@ -212,11 +206,8 @@
                 }
                 return status;
             }
-
 */
-
-
-        },
+    },
 
 /*    @todo
 
