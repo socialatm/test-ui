@@ -129,7 +129,7 @@
 </template>
 
 <script>
-  import {eventBus} from "../main";
+  
   export default{
     props: {
       user: {
@@ -151,55 +151,47 @@
         return this.user.avatar;
       },
     },
-        methods: {
-            postUser(){
-                console.log(this.user);
-                this.updateUser(this.user)  // Global
-                    .then(() => {    //  .then((data) => {
-                        eventBus.$emit('userSaved');
-                    }, (err) => {
-                        console.log(err);
-                        this.error = true;
-                        this.errorMsg = err.body;
-                    });
-
-
-            },
-            closeEdit(){
-                eventBus.$emit('userSaved');
-            },
-            changeAvatar(){
-                this.$refs.fileImg.click();
-            },
-            generateImg(file){
-
-                let reader = new FileReader();
-                // let self = this;
-                reader.onloadend = function () {
-                    document.getElementById('userAvatarEdit').src = reader.result;
-                }
-                reader.readAsDataURL(file);
-            },
-            getImageInput(event){
-                this.image = event.target.files[0];
-                this.generateImg(this.image);
-                this.sendAvatar();
-            },
-            sendAvatar(){
-                const formData = new FormData();
-                formData.append("image", this.image);
-                this.sendUserAvatar(formData)    // Global
-                    .then((data) => {
-                        this.useravatar = data.body;    //  Global
-                    }, (err) => {
-                        console.log(err);
-                    })
-            }
-        },
-        created() {
-            if (this.user.address) return;
-            this.useraddress = {};
+    methods: {
+      postUser(){
+        console.log(this.user);
+        this.updateUser(this.user)
+        .then((err) => {
+          console.log(err);
+          this.error = true;
+          this.errorMsg = err.body;
+        });
+      },
+      closeEdit(){},
+      changeAvatar(){
+        this.$refs.fileImg.click();
+      },
+      generateImg(file){
+        let reader = new FileReader();
+        reader.onloadend = function () {
+          document.getElementById('userAvatarEdit').src = reader.result;
         }
+        reader.readAsDataURL(file);
+      },
+      getImageInput(event){
+        this.image = event.target.files[0];
+        this.generateImg(this.image);
+        this.sendAvatar();
+      },
+      sendAvatar(){
+        const formData = new FormData();
+        formData.append("image", this.image);
+        this.sendUserAvatar(formData)
+        .then((data) => {
+          this.useravatar = data.body;    //  Global
+        }, (err) => {
+          console.log(err);
+        })
+      }
+    },
+    created() {
+      if (this.user.address) return;
+      this.useraddress = {};
+    }
   }
 </script>
 
