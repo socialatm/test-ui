@@ -66,18 +66,17 @@
         },
         methods: {
 
-/* @todo    
-            addLike(){
-                Global.postCommentLike(this.comment._id)
-                    .then(() => {    // .then((data) => {
-                        this.comment.likes.push(Global.userId);
-                    }, (err) => {
-                        console.log(err);
-                    })
-            }
-*/
+/* @todo -  still needs work
+          addLike(){
+            this.postCommentLike(this.comment._id)
+            .then(() => {
+              this.comment.likes.push(this.userId);
+            }, (err) => {
+              console.log(err);
+            })
+          }
 
-
+          */
         }
     }
 </script>

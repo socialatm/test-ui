@@ -171,47 +171,38 @@
           console.log(err);
         })
       },
+      load(){
+        this.userId = this.$route.params.id;
+        this.getUser();
+        this.$router.push("/history");
+      },
 
-/* @todo
-            load(){
-                this.userId = this.$route.params.id;
-                if (!this.userId) {
-                    this.userId = Global.userId;
-                }
-                if (this.userId === Global.userId) {
-                    this.$router.push({name: 'history'});
-                }
-                this.getUser();
-            },
-*/
-
-/* @todo
-            getRequestStatus(){
-                let status = 'send';
-                Global.friendships.forEach((friendship) => {
-                    if (friendship.status === 'PENDING') {
-                        if (friendship.userOne === this.user._id && friendship.userTwo === Global.userId) {
-                            status = 'accept';
-                        }
-                        if (friendship.userOne === Global.userId && friendship.userTwo === this.user._id) {
-                            status = 'pending'
-                        }
-                    }
-                })
-                if (this.userId === Global.userId) {
-                    status = 'null';
-                }
-                if (Global.user.friends.includes(this.user._id)) {
-                    status = 'friend';
-                }
-                return status;
+/* @todo - still need work
+      getRequestStatus(){
+        let status = 'send';
+        this.friendships.forEach((friendship) => {
+          if (friendship.status === 'PENDING') {
+            if (friendship.userOne === this.user._id && friendship.userTwo === Global.userId) {
+              status = 'accept';
             }
-*/
+            if (friendship.userOne === Global.userId && friendship.userTwo === this.user._id) {
+              status = 'pending'
+            }
+          }
+        })
+        if (this.userId === Global.userId) {
+          status = 'null';
+        }
+        if (Global.user.friends.includes(this.user._id)) {
+          status = 'friend';
+        }
+        return status;
+      }
     },
-
+*/
 /*    @todo
 
-        computed: {
+      computed: {
             isUser(){
                 return this.userId === Global.userId;
             },
