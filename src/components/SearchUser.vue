@@ -93,47 +93,45 @@
 </template>
 
 <script>
-  import {eventBus} from "../main";
-    export default{
-        data: function () {
-            return {
-                firstName: '',
-                lastName: '',
-                username: '',
-                email: '',
-                phone: '',
-                street: '',
-                zip: '',
-                city: '',
-                country: ''
-            };
-        },
-        methods: {
-            findUser(){
-                this.findUsers(this.generateQuery())  //  Global
-                    .then((data) => {
-                        eventBus.$emit('searchPerformed', data.body);
-                    }, (err) => {
-                        console.log(err);
-                        this.error = true;
-                        this.errorMsg = err.body;
-                    });
-            },
-            generateQuery(){
-                let query = '?';
-                if (this.firstName !== '') query += 'name.firstName=' + this.firstName + '&';
-                if (this.lastName !== '') query += 'name.lastName=' + this.lastName + '&';
-                if (this.username !== '') query += 'username=' + this.username + '&';
-                if (this.email !== '') query += 'contact.email=' + this.email + '&';
-                if (this.phone !== '') query += 'contact.phone=' + this.phone + '&';
-                if (this.street !== '') query += 'address.street=' + this.street + '&';
-                if (this.zip !== '') query += 'address.zip=' + this.zip + '&';
-                if (this.city !== '') query += 'address.city=' + this.city + '&';
-                if (this.country !== '') query += 'address.country=' + this.country;
-                return query;
-            }
-        }
+  
+  export default{
+    data: function () {
+      return {
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        phone: '',
+        street: '',
+        zip: '',
+        city: '',
+        country: ''
+      };
+    },
+    methods: {
+      findUser(){
+        this.findUsers(this.generateQuery())
+        .then((err) => {
+          console.log(err);
+          this.error = true;
+          this.errorMsg = err.body;
+        });
+      },
+      generateQuery(){
+        let query = '?';
+        if (this.firstName !== '') query += 'name.firstName=' + this.firstName + '&';
+        if (this.lastName !== '') query += 'name.lastName=' + this.lastName + '&';
+        if (this.username !== '') query += 'username=' + this.username + '&';
+        if (this.email !== '') query += 'contact.email=' + this.email + '&';
+        if (this.phone !== '') query += 'contact.phone=' + this.phone + '&';
+        if (this.street !== '') query += 'address.street=' + this.street + '&';
+        if (this.zip !== '') query += 'address.zip=' + this.zip + '&';
+        if (this.city !== '') query += 'address.city=' + this.city + '&';
+        if (this.country !== '') query += 'address.country=' + this.country;
+        return query;
+      }
     }
+  }
 </script>
 
 <style scoped>
