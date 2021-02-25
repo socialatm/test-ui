@@ -92,85 +92,63 @@
 </template>
 
 <script>
-    import Newpost from './NewPost.vue';
-    import Singlepost from './SinglePost.vue';
-    import UserEdit from './UserEdit.vue';
-    import {eventBus} from "../main";
-    import {Global} from '../global.js';
-    export default {
-        components: {
-            newPost: Newpost,
-            singlePost: Singlepost,
-            userEditComp: UserEdit,
-        },
-        data: function () {
-            return {
-                newpost: false,
-                posts: [],
-                loading: true,
-                userEdit: false
-            }
-        },
-        props: {
-            user: {
-              type:Object,
-              default: this.user
-            }
-        },
-        methods: {
-            showNewPost(){
-                this.newpost = true;
-            },
-            fetchUserPost(){
-                console.log('fetch');
-                if (!Global.userId) return;
-                Global.getPosts(Global.userId)
-                    .then((data) => {
-                        this.posts = data.body;
-                        this.loading = false;
-                    }, (err) => {
-                        console.log(err);
-                    });
-            },
-            editUser(){
-                this.userEdit = true;
-            }
-        },
-        created(){
-            eventBus.$on('posted', (post) => {
-                this.loading = false;
-                this.posts.unshift(post);
-            });
-
-            eventBus.$on('posting', () => {
-                this.loading = true;
-                this.newpost = false;
-            });
-
-            eventBus.$on('userSaved', () => {
-                this.userEdit = false;
-            });
-
-            eventBus.$on('closePost', () => {
-                console.log("cloooose")
-                this.newpost = false;
-            });
-            
-            this.userInterval = setInterval(() => {
-                if(!this.loading){
-                    this.fetchUserPost();
-                }
-                },
-                300000);
-        },
-        mounted(){
-            if (!Global.userId) return;
-            this.fetchUserPost();
-        },
-        beforeDestroy(){
-            clearInterval(this.userInterval);
-        }
+  import Newpost from './NewPost.vue';
+  import Singlepost from './SinglePost.vue';
+  import UserEdit from './UserEdit.vue';
+  
+  export default {
+    components: {
+      newPost: Newpost,
+      singlePost: Singlepost,
+      userEditComp: UserEdit,
+    },
+    data: function () {
+      return {
+        newpost: false,
+        posts: [],
+        loading: true,
+        userEdit: false
+      }
+    },
+    props: {
+      user: {
+        type:Object,
+        default: this.user
+      }
+    },
+    methods: {
+      showNewPost(){
+        this.newpost = true;
+      },
+      fetchUserPost(){
+        console.log('fetch');
+        if (!this.userId) return;
+        this.getPosts(this.userId)
+        .then((data) => {
+          this.posts = data.body;
+          this.loading = false;
+        }, (err) => {
+          console.log(err);
+        });
+      },
+      editUser(){
+        this.userEdit = true;
+      }
+    },
+    created(){
+      this.userInterval = setInterval(() => {
+        this.fetchUserPost();
+      },
+      300000);
+    },
+    mounted(){
+      if (!this.userId) return;
+      this.fetchUserPost();
+    },
+    beforeDestroy(){
+      clearInterval(this.userInterval);
     }
+  }
 </script>
 
 <style scoped>
