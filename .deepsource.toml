@@ -7,4 +7,3 @@ enabled = true
   [analyzers.meta]
   environment = ["nodejs"]
   plugins = ["vue"]
-  style_guide = "standard"
