@@ -67,8 +67,7 @@
   import SearchUser from './SearchUser.vue';
   import SearchResultList from './SearchResultList.vue';
   import SingleUser from './SingleUser.vue';
-  import {eventBus} from "../main";
-    
+      
   export default{
     components: {
       singleUser: SingleUser,
@@ -105,28 +104,23 @@
           return;
         }
       },
-            fetchFriends(){
-                this.pendingFriends = [];
-                this.friends = [];
-
-//                Global.getFriends()
-//                    .then((data) => {
-//                        console.log(data);
-//                        Global.friendships = data.body;
-                        this.friendships.forEach((friendship) => {  //  Global
-                            if (friendship.status === 'PENDING') {
-                                this.pendingFriends.push(friendship);
-                            } else {
-                                this.friends.push(friendship);
-                            }
-//                        });
-//                        console.log(Global.friendships, 'after action');
-
-//                    }, (err) => {
-//                        console.log(err)
-                    });
-                this.loading = false;
+      fetchFriends() {
+        this.pendingFriends = [];
+        this.friends = [];
+        this.getFriends()
+        .then((data) => {
+        console.log(data);
+        this.friendships = data.body;
+          this.friendships.forEach((friendship) => {
+            if (friendship.status === 'PENDING') {
+              this.pendingFriends.push(friendship);
+            } else {
+              this.friends.push(friendship);
             }
+          });
+        });
+        this.loading = false;
+      }
     },
     computed: {
       friendsSize(){
@@ -141,19 +135,12 @@
         return 'Close'
       }
     },
-      created(){
-        this.fetchFriends();
-          eventBus.$on('searchPerformed', (result) => {
-            this.loading = false;
-            this.searchResults = result;
-            this.searchOpen = 'performed';
-            this.showResultList =true;
-          });
-          eventBus.$on('friendshipActionDone', () => {
-            this.fetchFriends();
-          });
-      }
+    created(){
+      this.fetchFriends();
+      this.searchOpen = 'performed';
+      this.showResultList =true;
     }
+  }
 </script>
 
 <style scoped>
