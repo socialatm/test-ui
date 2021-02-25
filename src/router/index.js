@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import NewsfeedComp from '@/components/NewsfeedComp'
 import UserView from '@/components/UserView.vue';
 import Friends from '@/components/Friends.vue';
+import axios from 'axios'
 
 const routes = [
   {
@@ -15,7 +16,10 @@ const routes = [
   {
     path: '/newsfeed',
     name: 'Newsfeed',
-    component: NewsfeedComp
+    component: NewsfeedComp,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/register',
@@ -43,7 +47,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
 ]
 
@@ -51,5 +58,19 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (axios.defaults.headers.common['Authorization'] == null) {
+      next({
+        path: "/login"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
