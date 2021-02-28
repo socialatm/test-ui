@@ -118,7 +118,7 @@
 <script>
   import Singlepost from './SinglePost.vue';
   
-  export default{
+  export default {
     components: {
       singlePost: Singlepost
     },
@@ -235,6 +235,7 @@
             }
         }
     }
+  }
 </script>
 
 <style scoped>
